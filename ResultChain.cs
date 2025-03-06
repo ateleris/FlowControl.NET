@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace FlowControl.NET;
 
 public class ResultChain<T, E>(Task<ResultOrError<T, E>> initial) where E : Error?
