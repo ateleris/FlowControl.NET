@@ -1,3 +1,5 @@
+using System;
+
 namespace FlowControl.NET;
 
 public class Error
