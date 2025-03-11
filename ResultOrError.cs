@@ -31,14 +31,14 @@ public class ResultOrError<T, E> where E : Error?
     public Task<U> MatchFuncAsync<U>(Func<T, U> f1, Func<E, U> f2)
         => Task.FromResult(!isError ? f1(tVal!) : f2(error!));
 
-    public async Task<U> MatchFuncAsync<U>(Func<T, Task<U>> f1, Func<E, U> f2)
-        => !isError ? await f1(tVal!) : f2(error!);
+    public async Task<U> MatchFuncAsync<U>(Func<T, Task<U>> f1, Func<E, U> f2, CancellationToken ct = default)
+        => !isError ? await f1(tVal!).WaitAsync(ct) : f2(error!);
 
-    public async Task<U> MatchFuncAsync<U>(Func<T, U> f1, Func<E, Task<U>> f2)
-        => !isError ? f1(tVal!) : await f2(error!);
+    public async Task<U> MatchFuncAsync<U>(Func<T, U> f1, Func<E, Task<U>> f2, CancellationToken ct = default)
+        => !isError ? f1(tVal!) : await f2(error!).WaitAsync(ct);
 
-    public async Task<U> MatchFuncAsync<U>(Func<T, Task<U>> f1, Func<E, Task<U>> f2)
-        => !isError ? await f1(tVal!) : await f2(error!);
+    public async Task<U> MatchFuncAsync<U>(Func<T, Task<U>> f1, Func<E, Task<U>> f2, CancellationToken ct = default)
+        => !isError ? await f1(tVal!).WaitAsync(ct) : await f2(error!).WaitAsync(ct);
 
     public void MatchAction(Action<T> f1, Action<E> f2)
     {
