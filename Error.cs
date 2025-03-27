@@ -27,6 +27,12 @@ public class Error<TErrorType> : Error
         Type = type
     };
 
+    public static Error<TErrorType> New(TErrorType? type) => new()
+    {
+        Message = string.Empty,
+        Type = type
+    };
+
     public static Error<TErrorType> New(Exception ex, TErrorType? type = default) => new()
     {
         Message = ex.Message,
