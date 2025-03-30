@@ -1,28 +1,30 @@
-﻿namespace FlowControl.NET;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 
-public class SuccessOrError<T> : ResultOrError<bool, T> where T : Error
+namespace FlowControl.NET;
+
+public class SuccessOrError<E> : ResultOrError<bool, E> where E : Error
 {
     public SuccessOrError() : base(true)
     {
     }
 
-    public SuccessOrError(T error) : base(error)
+    public SuccessOrError(E error) : base(error)
     {
     }
 
-    public static SuccessOrError<T> Success()
+    public static SuccessOrError<E> Success()
     {
-        return new SuccessOrError<T>();
+        return new SuccessOrError<E>();
     }
 
-    public new static SuccessOrError<T> Error(T value) => new(value);
+    public new static SuccessOrError<E> Error(E value) => new(value);
 
-    public static implicit operator SuccessOrError<T>(T value)
+    public static implicit operator SuccessOrError<E>(E value)
     {
-        return new SuccessOrError<T>(value);
+        return new SuccessOrError<E>(value);
     }
 
     public new bool Value => base.Value;
 
-    public new T? ErrorValue => base.ErrorValue;
+    public new E? ErrorValue => base.ErrorValue;
 }
