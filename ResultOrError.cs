@@ -31,6 +31,11 @@ public class ResultOrError<T, E> where E : Error?
     {
         return new ResultOrError<T, E>(value);
     }
+    public void Deconstruct(out T? value, out E? error)
+    {
+        value = isError ? default : tVal;
+        error = isError ? this.error : default;
+    }
 
     public Task<U> MatchFuncAsync<U>(Func<T, U> f1, Func<E, U> f2)
         => Task.FromResult(!isError ? f1(tVal!) : f2(error!));
