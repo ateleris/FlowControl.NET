@@ -31,6 +31,7 @@ public class ResultOrError<T, E> where E : Error?
     {
         return new ResultOrError<T, E>(value);
     }
+
     public void Deconstruct(out T? value, out E? error)
     {
         value = isError ? default : tVal;
